@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios';
 import AuthContext from '../contexts/AuthContext';
 
 const JobDetail = () => {
@@ -9,12 +9,12 @@ const JobDetail = () => {
   const [job, setJob] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/jobs/${id}`).then(res => setJob(res.data));
+    api.get(`/api/jobs/${id}`).then(res => setJob(res.data));
   }, [id]);
 
   const handleApply = async () => {
     try {
-      await axios.post(`http://localhost:5000/api/jobs/${id}/apply`);
+      await api.post(`/api/jobs/${id}/apply`);
       alert('Applied successfully');
     } catch (err) {
       alert('Application failed');

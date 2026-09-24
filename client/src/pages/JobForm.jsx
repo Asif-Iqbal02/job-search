@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios';
 import AuthContext from '../contexts/AuthContext';
 
 const JobForm = () => {
@@ -13,7 +13,7 @@ const JobForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/jobs', form);
+      await api.post('/api/jobs', form);
       navigate('/dashboard');
     } catch (err) {
       alert('Failed to post job');

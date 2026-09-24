@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../contexts/AuthContext';
-import axios from 'axios';
+import api from '../api/axios';
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
@@ -10,11 +10,11 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (user?.role === 'employer') {
-      axios.get('http://localhost:5000/api/jobs').then(res => {
+      api.get('/api/jobs').then(res => {
         setJobs(res.data.filter(job => job.employer._id === user.id));
       });
     } else if (user?.role === 'jobseeker') {
-      axios.get('http://localhost:5000/api/jobs').then(res => {
+      api.get('/api/jobs').then(res => {
         setJobs(res.data);
       });
     }
@@ -25,7 +25,7 @@ const Dashboard = () => {
     const formData = new FormData();
     formData.append('resume', resume);
     try {
-      await axios.post('http://localhost:5000/api/users/upload-resume', formData, {
+      await api.post('/api/users/upload-resume', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       alert('Resume uploaded');
