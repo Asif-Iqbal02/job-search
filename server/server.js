@@ -14,11 +14,10 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/jobportal', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => console.log('MongoDB connected'))
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/jobportal')
+  .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
+
 
 app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);
